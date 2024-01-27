@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+factorize() {
+  local number=$1
+  for ((i=2; i*i<=number; i++)); do
+    if ((number % i == 0)); then
+      echo "$number=$i*$((number / i))"
+      return
+    fi
+  done
+  echo "$number=$number*1"
+}
+
+if [ "$#" -ne 1 ]; then
+  echo "Usage: factors <file>"
+  exit 1
+fi
+
+file=$1
+
+while IFS= read -r line; do
+  factorize "$line"
+done < "$file"
