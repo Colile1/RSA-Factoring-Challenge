@@ -1,21 +1,24 @@
-#!/usr/bin/env bash
-import math
+#!/usr/bin/python3
+import sys
+from check import ( cleanning, compute_prime_numbers, result)
 
-def prime_factors(n):
-factors = []
-while n % 2 == 0:
-factors.append(2)
-n //= 2
-for i in range(3, int(math.sqrt(n)) + 1, 2):
-while n % i == 0:
-factors.append(i)
-n //= i
-if n > 2:
-factors.append(n)
-return factors
+""" Function for running the prime number forum"""
 
-with open("tests/rsa-16", "r") as f:
-n = int(f.read())
 
-p, q = prime_factors(n)
-print(f"{n}={p}*{q}")
+def rsa():
+	d = sys.argv
+	if len(d) == 2:
+		f = open(sys.argv[-1], 'r')
+		e = f.readline()
+		q = cleanning('\n', list(e))
+		while len(e) > 0:
+			w, u = compute_prime_numbers(q)
+			result(w, u, q)
+			e = f.readline()
+			if len(e) > 0:
+				q = cleanning('\n', list(e))
+		f.close()
+
+
+if __name__ == '__main__':
+	rsa()
